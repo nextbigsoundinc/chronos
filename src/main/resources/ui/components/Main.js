@@ -50,7 +50,7 @@ export default class Main extends React.Component {
               <div className="col-md-1 bg-success">{jobSummaryStore.idleCount}</div>
             </div>
           </div>
-          <JobSummaryView jobs={this.getVisibleJobs()}/>
+          <JobSummaryView jobs={this.getVisibleJobs()} />
         </div>
       </div>
     )
