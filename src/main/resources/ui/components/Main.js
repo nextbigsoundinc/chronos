@@ -5,6 +5,16 @@ import {observer} from 'mobx-react'
 
 @observer
 export default class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterString: ''
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+  handleChange(e) {
+    this.state.filterString = e.target.value.toLowerCase()
+  }
   derp(event) {
     console.log(event)
   }
@@ -15,6 +25,14 @@ export default class Main extends React.Component {
         <div className="panel panel-default">
           <div className="panel-heading">
             <JobEditor jobSummaryStore={jobSummaryStore} />
+          </div>
+          <div className="panel-heading">
+            <input
+              type="text"
+              placeholder="filter (e.g. job-name, status, state)"
+              size="40"
+              onChange={this.handleChange}
+            />
           </div>
           <div className="panel-body">
             <div className="row">
@@ -32,14 +50,20 @@ export default class Main extends React.Component {
               <div className="col-md-1 bg-success">{jobSummaryStore.idleCount}</div>
             </div>
           </div>
-          <JobSummaryView jobs={this.getVisibleJobs()} />
+          <JobSummaryView jobs={this.getVisibleJobs()}/>
         </div>
       </div>
     )
   }
 
   getVisibleJobs() {
-    return this.props.jobSummaryStore.jobSummarys
+    return this.props.jobSummaryStore.jobSummarys.filter(
+      e => (
+        e.name.toLowerCase().includes(this.state.filterString) ||
+        e.state.toLowerCase().includes(this.state.filterString) ||
+        e.status.toLowerCase().includes(this.state.filterString)
+      )
+    )
   }
 }
 
