@@ -6,7 +6,7 @@ import {observer} from 'mobx-react'
 @observer
 export default class Main extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       filterString: ''
     }
