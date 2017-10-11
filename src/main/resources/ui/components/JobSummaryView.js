@@ -37,7 +37,7 @@ class JobSummaryView extends React.Component {
   }
   renderJob(job) {
     return (
-      <tr key={job.name}>
+      <tr key={job.name} data-filter-value={job.name + ' ' + job.status + ' ' + job.state}>
         {this.getNameTd(job)}
         <td className={job.nextExpected === 'OVERDUE' ? 'danger' : null} data-container="body" data-toggle="tooltip" data-placement="top" title={job.schedule}>{job.nextExpected}</td>
         <td className={this.getStatusClass(job)}>{job.status}</td>

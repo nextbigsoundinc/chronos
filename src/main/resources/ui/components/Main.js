@@ -5,15 +5,23 @@ import {observer} from 'mobx-react'
 
 @observer
 export default class Main extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      filterString: ''
-    }
-    this.handleChange = this.handleChange.bind(this)
-  }
   handleChange(e) {
-    this.state.filterString = e.target.value.toLowerCase()
+    //If filter is empty, show all rows
+    if(e.target.value.length==0) {
+      document.querySelectorAll('[data-filter-value]').forEach(function(node) {
+        node.style.display = ''
+      })
+      return
+    }
+
+    //Hide all rows
+    document.querySelectorAll('[data-filter-value]').forEach(function(node) {
+      node.style.display = 'none'
+    })
+    //Only show rows that match the filter
+    document.querySelectorAll('[data-filter-value*="' + e.target.value.toLowerCase() + '"]').forEach(function(node) {
+      node.style.display = ''
+    })
   }
   derp(event) {
     console.log(event)
@@ -57,13 +65,7 @@ export default class Main extends React.Component {
   }
 
   getVisibleJobs() {
-    return this.props.jobSummaryStore.jobSummarys.filter(
-      e => (
-        e.name.toLowerCase().includes(this.state.filterString) ||
-        e.state.toLowerCase().includes(this.state.filterString) ||
-        e.status.toLowerCase().includes(this.state.filterString)
-      )
-    )
+    return this.props.jobSummaryStore.jobSummarys
   }
 }
 
