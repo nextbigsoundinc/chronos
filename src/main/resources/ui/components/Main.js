@@ -5,13 +5,6 @@ import {observer} from 'mobx-react'
 
 @observer
 export default class Main extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      filterString: ''
-    }
-    this.handleChange = this.handleChange.bind(this)
-  }
   handleChange(e) {
     //If filter is empty, show all rows
     if(e.target.value.length==0) {
